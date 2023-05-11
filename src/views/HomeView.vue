@@ -2,7 +2,13 @@
   <div>
     <div class="common-layout">
       <el-container>
-        <el-header>Header</el-header>
+        <el-header>
+          <!-- Header -->
+          <div class="header">
+            <Header />
+          </div>
+          <!-- Header -->
+        </el-header>
         <el-container>
           <el-aside width="200px">
             <!-- Aside -->
@@ -18,7 +24,8 @@
 
 <script>
 
-import Aside from '../components/HomeCom/Aside.vue'
+import Aside from '@/components/HomeCom/Aside.vue'
+import Header from '@/components/HomeCom/Header.vue'
 
 export default {
   setup() {
