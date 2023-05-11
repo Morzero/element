@@ -1,0 +1,65 @@
+<template>
+   <div v-show="showPopup" class="popup">
+      <div class="popup-container">
+         <p>这是每天只显示一次的弹窗内容</p>
+         <button @click="closePopup">关闭</button>
+      </div>
+   </div>
+</template>
+
+<script>
+   export default {
+      data() {
+         return {
+            showPopup: false
+         };
+      },
+      mounted() {
+         const lastPopupDate = localStorage.getItem('lastPopupDate');
+         const today = new Date().toLocaleDateString();
+         if (lastPopupDate !== today) {
+            // 今天还没有弹窗
+            this.showPopup = true;
+            localStorage.setItem('lastPopupDate', today);
+         }
+      },
+      methods: {
+         closePopup() {
+            this.showPopup = false;
+         }
+      }
+   }
+</script>
+
+<style>
+   .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+   }
+
+   .popup-container {
+      max-width: 80vw;
+      max-height: 80vh;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      overflow-y: auto;
+   }
+
+   .popup-container button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+   }
+</style>
