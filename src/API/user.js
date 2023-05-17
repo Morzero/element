@@ -1,4 +1,4 @@
-import main from '../API/reqest'
+import main from './reqest'
 
 export function login(data) {
    return main({
@@ -9,7 +9,7 @@ export function login(data) {
 }
 
 export function getUserinfo() {
-   return axios({
+   return main({
       url: "/admin/getuserinfo",
       method: "post",
    });

@@ -4,20 +4,19 @@
       <el-container>
         <el-header>
           <!-- Header -->
-          <div class="header">
-            <Header />
-          </div>
+          <Header />
           <!-- Header -->
         </el-header>
         <el-container>
-          <el-aside width="200px">
+          <el-aside class="elAside" width="210px">
             <!-- Aside -->
             <Aside />
             <!-- Aside -->
           </el-aside>
-          <el-main>Main</el-main>
+          <el-main class="elMain">Main</el-main>
         </el-container>
       </el-container>
+
     </div>
   </div>
 </template>
@@ -34,4 +33,19 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.el-header {
+  border-bottom: 1px solid rgb(200, 200, 200);
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  height: 60px;
+  overflow: hidden;
+}
+
+.elMain {
+  padding: 0;
+}
+</style>

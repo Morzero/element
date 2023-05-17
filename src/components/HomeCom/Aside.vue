@@ -1,43 +1,39 @@
 <template>
    <div>
       <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
-
-
-         <el-sub-menu index="1">
-            <template #title>item four</template>
-            <el-menu-item index="1-1">item one</el-menu-item>
-            <el-menu-item index="1-2">item one</el-menu-item>
-            <el-menu-item index="1-3">item one</el-menu-item>
-            <el-menu-item index="1-4">item one</el-menu-item>
-            <el-menu-item index="1-5">item one</el-menu-item>
-            <el-menu-item index="1-6">item one</el-menu-item>
-            <el-menu-item index="1-7">item one</el-menu-item>
+         <el-menu-item index="1-327">item one</el-menu-item>
+         <!--  item -->
+         <el-sub-menu v-for="(item, index)  in crr" :index="index" :key="index">
+            <!-- menu -->
+            <template #title>{{ item.name }}</template>
+            <el-menu-item v-for="content, i in item.children" :index="content.name" :key="index">{{ content.name
+            }}</el-menu-item>
+            <!--  item -->
          </el-sub-menu>
-         <el-sub-menu index="2">
-            <template #title>item four</template>
-            <el-menu-item index="2-1">item one</el-menu-item>
-            <el-menu-item index="2-2">item one</el-menu-item>
-            <el-menu-item index="2-3">item one</el-menu-item>
-            <el-menu-item index="2-4">item one</el-menu-item>
-            <el-menu-item index="2-5">item one</el-menu-item>
-            <el-menu-item index="2-6">item one</el-menu-item>
-            <el-menu-item index="2-7">item one</el-menu-item>
-         </el-sub-menu>
-
       </el-menu>
+      <a href=""></a>
    </div>
 </template>
-<script>
+
+<script setup>
+import { userStors } from '../../stores/modules/user'
+import { onMounted, ref } from 'vue'
+let store = userStors()
+
+let crr = ref([])
 
 
-
-export default {
-   setup() {
-
-
-      return {}
-   }
+async function amendList(arr) {
+   let reslut = await store.getUserList()
+   crr.value = reslut
 }
+
+amendList()
+
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.el-menu-vertical-demo {
+   height: 93vh;
+}
+</style>

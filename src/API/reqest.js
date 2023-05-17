@@ -1,40 +1,57 @@
-import axios from 'axios';
-
-// 创建一个 axios 实例
+import axios from 'axios'
+//  配置 进度读 每次发生请求的时候 出发
+import NProgress from 'nprogress'
+import '../../node_modules/nprogress/nprogress.css'
+import router from '../router/index'
+import { ElMessage } from 'element-plus'
+import 'element-plus/lib/components/message/style/css'
+window.ElMessage = ElMessage
 const instance = axios.create({
-   baseURL: '/api', // 设置基础URL
-   timeout: 10000, // 设置请求超时时间（毫秒）
+   baseURL: '/api',
+   timeout: 10000
+})
 
-});
-
-// 请求拦截器
+// 添加请求拦截器
 instance.interceptors.request.use(
-   config => {
-      // 在请求发送之前可以对请求进行一些处理，例如添加 token 等
-      // config.headers.Authorization = `Bearer ${token}`;
-      return config;
-   },
-   error => {
-      // 请求错误处理
-      console.log('request error:', error);
-      return Promise.reject(error);
-   }
-);
+   function (config) {
+      // 在发送请求之前做些什么
+      NProgress.start()
 
-// 响应拦截器
+      //  每次发送请求 有token就携带
+      if (localStorage.getItem('token')) {
+         config.headers['Authorization'] = localStorage.getItem('token')
+      }
+
+      return config
+   },
+   function (error) {
+      // 对请求错误做些什么
+      return Promise.reject(error)
+   }
+)
+
+// 添加响应拦截器
 instance.interceptors.response.use(
-   response => {
-      // 在响应数据处理之前可以对响应数据进行一些处理，例如统一处理错误等
-      // if (response.data.code === 401) {
-      //   logout();
-      // }
-      return response;
-   },
-   error => {
-      // 响应错误处理
-      console.log('response error:', error);
-      return Promise.reject(error);
-   }
-);
+   function (response) {
+      // 2xx 范围内的状态码都会触发该函数。
+      // 对响应数据做点什么
+      NProgress.done()
+      let { code } = response.data
+      if (code == 40004 || code == 50008) {
+         if (code == 50008) {
+            localStorage.removeItem('token')
+            router.push('/login')
+         }
+         ElMessage.error(response.data.message)
+      }
 
-export default instance;
+      return response.data
+   },
+   function (error) {
+      // 超出 2xx 范围的状态码都会触发该函数。
+      // 对响应错误做点什么
+      return Promise.reject(error)
+   }
+)
+
+export default instance

@@ -29,8 +29,7 @@ import { onMounted, ref } from 'vue'
 export default {
    setup() {
       var user = userStors()
-      let route = useRoute()
-      let router = useRouter()
+
       let username = ref(''), pass = ref('')
 
       function submitForm(formName) {
@@ -55,10 +54,10 @@ export default {
 
       onMounted(() => {
          let fromDta = JSON.parse(localStorage.getItem('userInfo'))
-         if (username.value !== '' && pass.value !== '') {
-            username.value = fromDta.username
-            pass.value = fromDta.password
-         }
+
+         username.value = fromDta.username
+         pass.value = fromDta.password
+
       })
       return { user, username, pass, submitForm, savePass, removePass }
    },

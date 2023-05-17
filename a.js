@@ -1,14 +1,22 @@
-
-let arr1 = ['admin', 'agent']
-let arr2 = [11, 22, 33, 'agent']
+var str = "asdjkhasdkjhasdhttp://abc.com[745,266]a123asdkjhasdhttp://abc.com[74,26]asd123dhttp://abc.com[45,23]asdjkhasdasdjhasdhttp://abc.com[12,946]"
 
 
-for (let i = 0; i < arr1.length; i++) {
-   for (let o = 0; o < arr2.length; o++) {
-      if (arr1[i].includes(arr2[o])) {
-         return true
-      } else {
-         return false
-      }
-   }
+
+let value = 'http'
+let indexes = []
+let index = str.indexOf(value)
+
+while (index !== -1) {
+   indexes.push(index);
+   index = str.indexOf(value, index + 1);
 }
+
+console.log(indexes);
+
+let crr = []
+
+let vrr = indexes.map((v, i) => {
+   crr.push(str.slice(v, indexes[i + 1]))
+})
+console.log(crr);
+

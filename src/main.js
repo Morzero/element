@@ -1,12 +1,8 @@
 import './assets/main.css'
-
+/* mian css  */
 import { createApp } from 'vue'
-/* pina */
 import { createPinia } from 'pinia'
 /* pina */
-
-/* element ui */
-
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 /* element ui */
